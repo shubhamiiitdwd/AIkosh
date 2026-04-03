@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Environment & secrets
+.env
+*.env.local
+
+# Runtime data
+*.db
+AI_Kosh_Project/shared_workspace/1_raw_uploads/
+AI_Kosh_Project/shared_workspace/2_processed_data/
+AI_Kosh_Project/shared_workspace/3_models/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*

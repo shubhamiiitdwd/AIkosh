@@ -1,0 +1,327 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   AI Kosh AutoML Wizard — Team 1 Styles (aw- prefix)
+   Theme: NTT DATA AI Kosh — dark header, orange accent, white content
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Page Layout ─────────────────────────────────────────────────────────── */
+.aw-page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f6fa;
+  min-height: 100vh;
+  color: #2c3e50;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.aw-header {
+  background: #1a1a2e;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  height: 56px;
+}
+.aw-header-left { display: flex; align-items: center; gap: 16px; }
+.aw-logo { font-size: 18px; font-weight: 700; color: #fff; }
+.aw-logo-sub { font-size: 14px; color: #aaa; }
+.aw-header-right { display: flex; gap: 12px; }
+.aw-header-btn {
+  background: none; border: 1px solid #555; color: #ccc;
+  padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.aw-header-btn:hover { background: #333; color: #fff; }
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+.aw-container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+.aw-title-section { margin-bottom: 24px; }
+.aw-title { font-size: 28px; font-weight: 700; margin: 0 0 4px; }
+.aw-subtitle { color: #7f8c8d; font-size: 15px; margin: 0; }
+
+/* ── Stepper ─────────────────────────────────────────────────────────────── */
+.aw-stepper {
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 32px; gap: 0;
+}
+.aw-step-wrapper { display: flex; align-items: center; }
+.aw-step {
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer; gap: 6px; min-width: 100px;
+}
+.aw-step-circle {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; transition: all 0.3s;
+  background: #e0e0e0; color: #888;
+}
+.aw-step--active .aw-step-circle { background: #e67e22; color: #fff; box-shadow: 0 2px 12px rgba(230,126,34,0.4); }
+.aw-step--completed .aw-step-circle { background: #27ae60; color: #fff; }
+.aw-step--pending .aw-step-circle { background: #e0e0e0; color: #aaa; }
+.aw-step-label { font-size: 12px; font-weight: 600; text-align: center; color: #666; }
+.aw-step--active .aw-step-label { color: #e67e22; }
+.aw-step--completed .aw-step-label { color: #27ae60; }
+.aw-step-connector { width: 48px; height: 2px; background: #ddd; margin: 0 4px; margin-bottom: 20px; }
+.aw-step-connector--done { background: #27ae60; }
+
+/* ── Content Layout (main + sidebar) ─────────────────────────────────────── */
+.aw-content { background: #fff; border-radius: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+.aw-step-content { display: flex; gap: 24px; padding: 24px; }
+.aw-step-main { flex: 1; min-width: 0; }
+.aw-step-main--wide { flex: 1; }
+.aw-step-sidebar { width: 300px; flex-shrink: 0; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.aw-btn {
+  padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.aw-btn--primary { background: #e67e22; color: #fff; }
+.aw-btn--primary:hover { background: #d35400; }
+.aw-btn--primary:disabled { background: #ccc; cursor: not-allowed; }
+.aw-btn--secondary { background: #ecf0f1; color: #2c3e50; text-decoration: none; display: inline-block; }
+.aw-btn--secondary:hover { background: #d5dbdb; }
+.aw-btn--full { width: 100%; margin-top: 16px; }
+
+/* ── Badge ───────────────────────────────────────────────────────────────── */
+.aw-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 12px; font-weight: 600;
+}
+.aw-badge--green { background: #d5f5e3; color: #27ae60; }
+.aw-badge--orange { background: #fdebd0; color: #e67e22; }
+
+/* ── Back Button ─────────────────────────────────────────────────────────── */
+.aw-back-btn {
+  background: none; border: none; color: #555; cursor: pointer;
+  font-size: 14px; padding: 4px 0; margin-bottom: 16px;
+}
+
+/* ── Step 1: Dataset Select ──────────────────────────────────────────────── */
+.aw-upload-zone {
+  border: 2px dashed #ccc; border-radius: 12px; padding: 48px; text-align: center;
+  cursor: pointer; transition: all 0.2s; margin-bottom: 24px;
+}
+.aw-upload-zone:hover, .aw-upload-zone--active { border-color: #e67e22; background: #fef9f3; }
+.aw-upload-icon { font-size: 48px; margin-bottom: 12px; }
+.aw-dataset-info { margin-top: 8px; }
+.aw-dataset-name { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
+.aw-dataset-desc { color: #7f8c8d; font-size: 14px; margin: 0 0 16px; }
+.aw-meta-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+.aw-meta-card {
+  background: #f8f9fa; border-radius: 8px; padding: 16px; text-align: center;
+}
+.aw-meta-label { display: block; font-size: 12px; color: #888; margin-bottom: 4px; }
+.aw-meta-value { display: block; font-size: 24px; font-weight: 700; }
+.aw-dataset-catalog { margin-top: 24px; }
+.aw-dataset-catalog h4 { margin-bottom: 12px; color: #555; }
+.aw-dataset-list { display: flex; flex-direction: column; gap: 8px; }
+.aw-dataset-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; border: 1px solid #eee; border-radius: 8px; cursor: pointer;
+}
+.aw-dataset-item:hover { border-color: #e67e22; background: #fef9f3; }
+.aw-dataset-item-name { font-weight: 600; }
+.aw-dataset-item-right { display: flex; align-items: center; gap: 12px; }
+.aw-dataset-item-meta { color: #888; font-size: 13px; }
+.aw-dataset-delete-btn {
+  background: none; border: none; color: #ccc; cursor: pointer;
+  font-size: 16px; padding: 4px 8px; border-radius: 4px; line-height: 1;
+}
+.aw-dataset-delete-btn:hover { color: #e74c3c; background: #fdecea; }
+
+/* ── Workflow Sidebar ────────────────────────────────────────────────────── */
+.aw-workflow-list { list-style: none; padding: 0; }
+.aw-workflow-list li { padding: 6px 0; color: #888; font-size: 14px; }
+.aw-workflow-list li::before { content: '• '; }
+.aw-workflow-list .aw-workflow-active { color: #e67e22; font-weight: 600; }
+
+/* ── Step 2: Column Configuration ────────────────────────────────────────── */
+.aw-tab-bar, .aw-hyper-tabs, .aw-results-tabs { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid #eee; }
+.aw-tab {
+  padding: 8px 20px; border: none; background: none; cursor: pointer;
+  font-size: 14px; font-weight: 500; color: #888; border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+.aw-tab--active { color: #e67e22; border-bottom-color: #e67e22; }
+.aw-config-header h3 { margin: 0 0 4px; }
+.aw-config-header p { color: #888; margin: 0 0 16px; font-size: 14px; }
+.aw-columns-table { border: 1px solid #eee; border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+.aw-col-header {
+  display: grid; grid-template-columns: 60px 1fr 100px 60px 60px 60px;
+  background: #f8f9fa; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #888;
+}
+.aw-col-row {
+  display: grid; grid-template-columns: 60px 1fr 100px 60px 60px 60px;
+  padding: 10px 16px; border-top: 1px solid #f0f0f0; align-items: center; font-size: 14px;
+}
+.aw-col-row--target { background: #fef9f3; }
+.aw-dtype-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 10px; color: #fff;
+  font-size: 11px; font-weight: 600;
+}
+.aw-col-check input, .aw-col-target input { cursor: pointer; width: 16px; height: 16px; accent-color: #e67e22; }
+
+/* ── AI Panel ────────────────────────────────────────────────────────────── */
+.aw-ai-panel { background: #f8f9fa; border-radius: 10px; padding: 20px; }
+.aw-ai-panel h4 { margin: 0 0 8px; }
+.aw-ai-desc { font-size: 13px; color: #888; margin: 0 0 12px; }
+.aw-ai-label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; }
+.aw-ai-input {
+  width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
+  resize: none; font-size: 14px; box-sizing: border-box; margin-bottom: 8px;
+}
+.aw-ai-result { margin-top: 16px; }
+.aw-ai-result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: 600; }
+.aw-ai-field { margin-bottom: 8px; }
+.aw-ai-field label { display: block; font-size: 12px; color: #888; margin-bottom: 2px; }
+.aw-ai-features-count { color: #e67e22; font-weight: 600; }
+.aw-ai-reasoning { background: #fff; border-radius: 8px; padding: 12px; margin-top: 12px; }
+.aw-ai-reasoning h5 { margin: 0 0 6px; font-size: 13px; }
+.aw-ai-reasoning p { font-size: 13px; color: #555; margin: 0; line-height: 1.5; }
+.aw-ai-applied-msg { margin-top: 12px; padding: 8px 12px; background: #eaf6ff; border-radius: 6px; font-size: 13px; color: #2980b9; }
+
+/* ── AI Suggestion Chips ─────────────────────────────────────────────────── */
+.aw-ai-suggestions { margin-bottom: 14px; }
+.aw-suggestion-chips { display: flex; flex-direction: column; gap: 6px; }
+.aw-suggestion-chip {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #fff; border: 1px solid #ddd; border-radius: 8px;
+  padding: 8px 12px; cursor: pointer; text-align: left;
+  font-size: 13px; transition: all 0.2s;
+}
+.aw-suggestion-chip:hover { border-color: #e67e22; background: #fef9f3; }
+.aw-suggestion-chip--active { border-color: #e67e22; background: #fef9f3; }
+.aw-suggestion-text { flex: 1; font-weight: 500; color: #2c3e50; }
+.aw-suggestion-task {
+  padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600;
+  text-transform: uppercase; flex-shrink: 0; margin-left: 8px;
+}
+.aw-suggestion-task--classification { background: #d5f5e3; color: #27ae60; }
+.aw-suggestion-task--regression { background: #dbeafe; color: #2563eb; }
+.aw-suggestion-task--clustering { background: #fde8e8; color: #e74c3c; }
+
+/* ── Preview Table ───────────────────────────────────────────────────────── */
+.aw-preview-table-wrap { overflow-x: auto; }
+.aw-preview-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.aw-preview-table th { background: #f8f9fa; padding: 8px 12px; text-align: left; border-bottom: 2px solid #eee; }
+.aw-preview-table td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+
+/* ── Step 3: Configuration ───────────────────────────────────────────────── */
+.aw-auto-mode { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; margin-bottom: 16px; font-weight: 600; }
+.aw-auto-mode-info { text-align: center; padding: 40px; }
+.aw-auto-mode-info h3 { margin: 0 0 8px; }
+.aw-auto-mode-info p { color: #888; }
+.aw-toggle { position: relative; width: 48px; height: 26px; display: inline-block; }
+.aw-toggle input { opacity: 0; width: 0; height: 0; }
+.aw-toggle-slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc; border-radius: 26px; transition: 0.3s;
+}
+.aw-toggle-slider::before {
+  content: ''; position: absolute; height: 20px; width: 20px;
+  left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s;
+}
+.aw-toggle input:checked + .aw-toggle-slider { background: #e67e22; }
+.aw-toggle input:checked + .aw-toggle-slider::before { transform: translateX(22px); }
+.aw-section-title { font-size: 16px; font-weight: 600; margin: 20px 0 12px; }
+.aw-task-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.aw-task-card {
+  border: 2px solid #eee; border-radius: 10px; padding: 20px; text-align: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.aw-task-card:hover { border-color: #e67e22; }
+.aw-task-card--active { border-color: #e67e22; background: #fef9f3; }
+.aw-task-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+.aw-task-label { font-weight: 600; display: block; margin-bottom: 4px; }
+.aw-task-desc { font-size: 12px; color: #888; }
+.aw-model-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+.aw-model-card {
+  border: 2px solid #eee; border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.2s;
+}
+.aw-model-card:hover { border-color: #e67e22; }
+.aw-model-card--selected { border-color: #e67e22; background: #fef9f3; }
+.aw-model-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.aw-model-card-header input { accent-color: #e67e22; }
+.aw-model-desc { font-size: 12px; color: #888; margin: 0; }
+.aw-speed-badge { padding: 2px 8px; border-radius: 10px; font-size: 11px; color: #fff; font-weight: 600; }
+.aw-hyper-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.aw-hyper-field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.aw-hyper-field select {
+  width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;
+}
+
+/* ── Step 4: Training ────────────────────────────────────────────────────── */
+.aw-starting { text-align: center; padding: 40px; }
+.aw-starting-icon { font-size: 64px; animation: aw-pulse 1.5s ease-in-out infinite; }
+@keyframes aw-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.aw-progress-section { margin-bottom: 24px; }
+.aw-progress-label { text-align: center; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.aw-progress-bar-bg { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+.aw-progress-bar-fill { height: 100%; background: linear-gradient(90deg, #e67e22, #f39c12); border-radius: 4px; transition: width 0.5s; }
+.aw-stage-pipeline { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 16px; }
+.aw-stage-item-wrap { display: flex; align-items: center; flex-direction: column; position: relative; min-width: 80px; }
+.aw-stage-dot { width: 16px; height: 16px; border-radius: 50%; background: #ddd; border: 2px solid #ddd; }
+.aw-stage-dot--done { background: #27ae60; border-color: #27ae60; }
+.aw-stage-dot--active { background: #e67e22; border-color: #e67e22; box-shadow: 0 0 8px rgba(230,126,34,0.5); }
+.aw-stage-label { font-size: 11px; color: #888; margin-top: 4px; }
+.aw-stage-line { position: absolute; top: 8px; left: calc(50% + 12px); width: calc(100% - 24px); height: 2px; background: #ddd; }
+.aw-stage-line--done { background: #27ae60; }
+.aw-next-stage { text-align: center; color: #888; font-size: 13px; margin-top: 8px; }
+.aw-logs-section { margin-top: 8px; }
+.aw-logs-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.aw-logs-header h4 { margin: 0; font-size: 14px; }
+.aw-ws-status { font-size: 12px; color: #888; }
+.aw-ws-status--connected { color: #27ae60; }
+.aw-logs-filter { padding: 6px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; flex: 1; min-width: 120px; }
+.aw-logs-autoscroll { font-size: 13px; display: flex; align-items: center; gap: 4px; }
+.aw-logs-copy { padding: 4px 12px; border: 1px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; font-size: 13px; }
+.aw-logs-terminal {
+  background: #1a1a2e; color: #a3e635; border-radius: 10px; padding: 16px;
+  height: 250px; overflow-y: auto; font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px;
+}
+.aw-logs-empty { display: flex; align-items: center; gap: 8px; color: #888; padding: 40px; justify-content: center; }
+.aw-logs-cursor { animation: aw-blink 1s step-end infinite; }
+@keyframes aw-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.aw-log-line { padding: 2px 0; }
+.aw-log-time { color: #888; margin-right: 8px; }
+.aw-log-msg { color: #e2e8f0; }
+
+.aw-review-banner {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #d5f5e3; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+  font-weight: 600; color: #27ae60;
+}
+
+/* ── Training Sidebar ────────────────────────────────────────────────────── */
+.aw-training-status-panel { background: #f8f9fa; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.aw-training-status-panel h4 { margin: 0 0 12px; }
+.aw-status-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+.aw-status-value { font-weight: 600; }
+.aw-tips-panel { background: #f0fdf4; border-radius: 10px; padding: 16px; }
+.aw-tips-panel h4 { margin: 0 0 8px; }
+.aw-tips-panel ul { padding-left: 16px; margin: 0; }
+.aw-tips-panel li { font-size: 13px; color: #555; margin-bottom: 4px; }
+
+/* ── Step 5: Results ─────────────────────────────────────────────────────── */
+.aw-loading, .aw-error { text-align: center; padding: 60px; font-size: 16px; color: #888; }
+.aw-leaderboard { overflow-x: auto; }
+.aw-lb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.aw-lb-table th { background: #f8f9fa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #eee; }
+.aw-lb-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+.aw-lb-row--best { background: #fef9f3; }
+.aw-lb-model-id { font-family: 'Fira Code', monospace; font-size: 12px; }
+.aw-chart-container { padding: 16px 0; }
+.aw-chart-container h3 { margin: 0 0 16px; }
+.aw-export-section { border-top: 1px solid #eee; padding-top: 16px; margin-top: 24px; }
+.aw-export-section h4 { margin: 0 0 12px; }
+.aw-export-buttons { display: flex; gap: 12px; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .aw-step-content { flex-direction: column; }
+  .aw-step-sidebar { width: 100%; }
+  .aw-meta-cards { grid-template-columns: repeat(2, 1fr); }
+  .aw-task-cards { grid-template-columns: 1fr; }
+  .aw-model-cards { grid-template-columns: 1fr; }
+  .aw-hyper-grid { grid-template-columns: 1fr; }
+  .aw-stepper { flex-wrap: wrap; gap: 8px; }
+}

@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+*.db
+shared_workspace/1_raw_uploads/
+shared_workspace/2_processed_data/
+shared_workspace/3_models/
+*.egg-info/
+.venv/
+venv/

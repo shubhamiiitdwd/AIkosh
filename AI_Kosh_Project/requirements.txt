@@ -1,0 +1,25 @@
+# Core API
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+aiofiles
+
+# ML Engine
+h2o
+pandas
+numpy
+scikit-learn
+
+# AI Assistant (open-source - Phase 1)
+huggingface_hub
+
+# AI Assistant (Azure - Phase 2, uncomment when needed)
+# openai
+# azure-storage-blob
+
+# Real-time
+websockets
+
+# Visualization
+matplotlib
