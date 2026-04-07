@@ -1,5 +1,5 @@
 """
-Azure OpenAI implementation for column recommendation.
+Azure OpenAI implementation for column recommendation and AI summary.
 Activated when AZURE_OPENAI_API_KEY is set in .env.
 """
 import json
@@ -13,21 +13,48 @@ from .schemas import AIRecommendResponse, AISummaryResponse, ColumnInfo
 logger = logging.getLogger(__name__)
 
 
+def _get_client():
+    """Create an async Azure OpenAI client. Raises on import or config issues."""
+    from openai import AsyncAzureOpenAI
+
+    if not AZURE_OPENAI_API_KEY or not AZURE_OPENAI_ENDPOINT:
+        raise ValueError("Azure OpenAI API key or endpoint not configured")
+
+    return AsyncAzureOpenAI(
+        api_key=AZURE_OPENAI_API_KEY,
+        api_version=AZURE_OPENAI_API_VERSION,
+        azure_endpoint=AZURE_OPENAI_ENDPOINT,
+    )
+
+
+def _parse_json_response(text: str) -> dict:
+    """Extract and parse JSON from an LLM response that may contain markdown fences."""
+    # Strip markdown code fences if present
+    cleaned = text.strip()
+    if cleaned.startswith("```"):
+        # Remove opening fence (```json or ```)
+        first_newline = cleaned.index("\n") if "\n" in cleaned else len(cleaned)
+        cleaned = cleaned[first_newline + 1:]
+        # Remove closing fence
+        if cleaned.endswith("```"):
+            cleaned = cleaned[:-3].strip()
+
+    start = cleaned.find("{")
+    end = cleaned.rfind("}") + 1
+    if start < 0 or end <= start:
+        raise ValueError(f"No JSON object found in response: {text[:200]}")
+    return json.loads(cleaned[start:end])
+
+
 async def recommend(columns: list[ColumnInfo], use_case: str) -> AIRecommendResponse:
-    from openai import AzureOpenAI
+    client = _get_client()
 
     col_desc = "\n".join(
         f"- {c.name} ({c.dtype}, {c.null_count} nulls, {c.unique_count} unique)"
         for c in columns
     )
 
-    client = AzureOpenAI(
-        api_key=AZURE_OPENAI_API_KEY,
-        api_version=AZURE_OPENAI_API_VERSION,
-        azure_endpoint=AZURE_OPENAI_ENDPOINT,
-    )
-
-    response = client.chat.completions.create(
+    response = await client.chat.completions.create(
         model=AZURE_OPENAI_DEPLOYMENT,
         messages=[
             {
@@ -43,27 +70,34 @@ async def recommend(columns: list[ColumnInfo], use_case: str) -> AIRecommendResp
                 "content": f"Use case: {use_case}\n\nColumns:\n{col_desc}\n\nWhich column should be the target? Which should be features? Respond in JSON only.",
             },
         ],
+        max_tokens=500,
     )
 
     text = response.choices[0].message.content.strip()
-    start = text.find("{")
-    end = text.rfind("}") + 1
-    if start >= 0 and end > start:
-        data = json.loads(text[start:end])
-        valid_cols = {c.name for c in columns}
-        target = data.get("target", "")
-        features = [f for f in data.get("features", []) if f in valid_cols and f != target]
-        if not features:
-            features = [c.name for c in columns if c.name != target]
-        return AIRecommendResponse(
-            target_column=target,
-            features=features,
-            confidence="high confidence",
-            reasoning=data.get("reasoning", "AI-powered recommendation via Azure OpenAI"),
-            source="azure",
-        )
+    data = _parse_json_response(text)
 
-    raise ValueError("Could not parse Azure OpenAI response")
+    valid_cols = {c.name for c in columns}
+    target = data.get("target", "")
+    if target not in valid_cols:
+        # If AI hallucinated a column name, try case-insensitive match
+        target_lower = target.lower()
+        matched = next((c for c in valid_cols if c.lower() == target_lower), None)
+        if matched:
+            target = matched
+        else:
+            raise ValueError(f"AI recommended invalid target column: {target}")
+
+    features = [f for f in data.get("features", []) if f in valid_cols and f != target]
+    if not features:
+        features = [c.name for c in columns if c.name != target]
+
+    return AIRecommendResponse(
+        target_column=target,
+        features=features,
+        confidence="high confidence",
+        reasoning=data.get("reasoning", "AI-powered recommendation via Azure OpenAI"),
+        source="azure",
+    )
 
 
 async def generate_results_summary(
@@ -75,15 +109,10 @@ async def generate_results_summary(
     num_models: int,
 ) -> AISummaryResponse:
     """Executive summary of AutoML results via Azure OpenAI."""
-    from openai import AzureOpenAI
+    client = _get_client()
 
     metrics_str = "\n".join(f"- {k}: {v}" for k, v in metrics.items() if v is not None)
-    client = AzureOpenAI(
-        api_key=AZURE_OPENAI_API_KEY,
-        api_version=AZURE_OPENAI_API_VERSION,
-        azure_endpoint=AZURE_OPENAI_ENDPOINT,
-    )
-    response = client.chat.completions.create(
+    response = await client.chat.completions.create(
         model=AZURE_OPENAI_DEPLOYMENT,
         messages=[
             {
@@ -91,8 +120,8 @@ async def generate_results_summary(
                 "content": (
                     "You are a data science expert. Analyze ML results and provide insights. "
                     "Respond in this exact JSON format:\n"
-                    '{"executive_summary": "...", "key_insights": ["..."], '
-                    '"recommendations": ["..."], "real_world_example": "..."}'
+                    '{"executive_summary": "...", "key_insights": ["...", "...", "..."], '
+                    '"recommendations": ["...", "...", "..."], "real_world_example": "..."}'
                 ),
             },
             {
@@ -107,12 +136,10 @@ async def generate_results_summary(
         ],
         max_tokens=800,
     )
+
     text = response.choices[0].message.content.strip()
-    start = text.find("{")
-    end = text.rfind("}") + 1
-    if start < 0 or end <= start:
-        raise ValueError("Could not parse Azure OpenAI summary response")
-    data = json.loads(text[start:end])
+    data = _parse_json_response(text)
+
     return AISummaryResponse(
         executive_summary=data.get("executive_summary", ""),
         key_insights=data.get("key_insights", []),

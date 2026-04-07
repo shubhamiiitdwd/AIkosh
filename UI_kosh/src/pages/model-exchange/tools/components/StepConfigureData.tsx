@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import type { ColumnInfo, AIRecommendResponse, DatasetPreviewResponse, UseCaseSuggestion, MLTask } from '../types';
+import type { ColumnInfo, DatasetMetadata, AIRecommendResponse, DatasetPreviewResponse, UseCaseSuggestion, MLTask } from '../types';
 import * as api from '../api';
 import { aiSourceDisplay } from '../aiSource';
 
 interface Props {
   datasetId: string;
+  dataset: DatasetMetadata | null;
   columns: ColumnInfo[];
   targetColumn: string;
   featureColumns: string[];
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export default function StepConfigureData({
-  datasetId, columns, targetColumn, featureColumns,
+  datasetId, dataset, columns, targetColumn, featureColumns,
   onTargetChange, onFeaturesChange, onTaskSuggest, onContinue,
 }: Props) {
   const [activeTab, setActiveTab] = useState<'config' | 'preview'>('config');
@@ -148,6 +149,29 @@ export default function StepConfigureData({
 
         {activeTab === 'preview' && preview && (
           <div className="aw-preview-table-wrap">
+            {dataset && (
+              <div className="aw-preview-summary">
+                <div className="aw-preview-stat">
+                  <span className="aw-preview-stat-label">Total Rows</span>
+                  <span className="aw-preview-stat-value">{dataset.total_rows.toLocaleString()}</span>
+                </div>
+                <div className="aw-preview-stat">
+                  <span className="aw-preview-stat-label">Total Columns</span>
+                  <span className="aw-preview-stat-value">{dataset.total_columns}</span>
+                </div>
+                <div className="aw-preview-stat">
+                  <span className="aw-preview-stat-label">Size</span>
+                  <span className="aw-preview-stat-value">
+                    {dataset.size_bytes < 1024
+                      ? `${dataset.size_bytes} B`
+                      : dataset.size_bytes < 1024 * 1024
+                        ? `${(dataset.size_bytes / 1024).toFixed(1)} KB`
+                        : `${(dataset.size_bytes / (1024 * 1024)).toFixed(1)} MB`}
+                  </span>
+                </div>
+              </div>
+            )}
+            <p className="aw-preview-hint">Showing top {preview.rows.length} rows of {preview.total_rows.toLocaleString()}</p>
             <table className="aw-preview-table">
               <thead>
                 <tr>{preview.columns.map((c) => <th key={c}>{c}</th>)}</tr>

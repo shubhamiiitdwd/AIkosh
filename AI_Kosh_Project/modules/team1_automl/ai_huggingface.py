@@ -1,3 +1,4 @@
+import json
 import logging
 from .config import HUGGINGFACE_TOKEN, HUGGINGFACE_MODEL
 from .schemas import AIRecommendResponse, AISummaryResponse, ColumnInfo
@@ -79,7 +80,6 @@ async def recommend(columns: list[ColumnInfo], use_case: str) -> AIRecommendResp
             max_tokens=500,
         )
 
-        import json
         text = response.choices[0].message.content.strip()
         start = text.find("{")
         end = text.rfind("}") + 1
@@ -117,7 +117,6 @@ async def generate_results_summary(
 
     try:
         from huggingface_hub import InferenceClient
-        import json
 
         metrics_str = "\n".join(f"- {k}: {v}" for k, v in metrics.items() if v is not None)
         client = InferenceClient(model=HUGGINGFACE_MODEL, token=HUGGINGFACE_TOKEN)
@@ -128,8 +127,8 @@ async def generate_results_summary(
                     "content": (
                         "You are a data science expert. Analyze ML results and provide insights. "
                         "Respond in this exact JSON format:\n"
-                        '{"executive_summary": "...", "key_insights": ["..."], '
-                        '"recommendations": ["..."], "real_world_example": "..."}'
+                        '{"executive_summary": "...", "key_insights": ["...", "...", "..."], '
+                        '"recommendations": ["...", "...", "..."], "real_world_example": "..."}'
                     ),
                 },
                 {

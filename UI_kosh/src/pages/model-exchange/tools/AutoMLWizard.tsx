@@ -123,6 +123,7 @@ const AutoMLWizard = ({ onBack }: Props) => {
           {step === 1 && dataset && (
             <StepConfigureData
               datasetId={dataset.id}
+              dataset={dataset}
               columns={columns}
               targetColumn={targetColumn}
               featureColumns={featureColumns}

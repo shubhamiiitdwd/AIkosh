@@ -42,8 +42,10 @@ export default function StepTraining({ runId, onComplete, reviewMode = false }: 
   const logsRef = useRef<HTMLDivElement>(null);
   const hasAutoCompleted = useRef(false);
 
+  // HTTP polling as fallback — only fires when WebSocket is disconnected.
   useEffect(() => {
     const poll = setInterval(async () => {
+      if (connected) return; // Skip when WS is live — avoids redundant calls
       try {
         const s = await api.getTrainingStatus(runId);
         setStatus(s);
@@ -57,7 +59,25 @@ export default function StepTraining({ runId, onComplete, reviewMode = false }: 
       } catch { /* ignore */ }
     }, 2000);
     return () => clearInterval(poll);
-  }, [runId, onComplete, reviewMode]);
+  }, [runId, onComplete, reviewMode, connected]);
+
+  // Sync status from every WebSocket message so progress bar updates in real-time
+  useEffect(() => {
+    if (!lastMessage) return;
+    setStatus({
+      run_id: runId,
+      status: lastMessage.status as TrainingStatusResponse['status'],
+      progress_percent: lastMessage.progress,
+      current_stage: lastMessage.stage,
+      message: lastMessage.message,
+    });
+    if (lastMessage.status === 'complete' || lastMessage.status === 'failed' || lastMessage.status === 'stopped') {
+      if (lastMessage.status === 'complete' && !reviewMode && !hasAutoCompleted.current) {
+        hasAutoCompleted.current = true;
+        setTimeout(onComplete, 1500);
+      }
+    }
+  }, [lastMessage, runId, onComplete, reviewMode]);
 
   useEffect(() => {
     if (autoScroll && logsRef.current) {

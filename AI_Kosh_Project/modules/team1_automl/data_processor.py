@@ -10,16 +10,15 @@ from .enums import MLTask
 
 def get_metadata(filepath: str, dataset_id: str, filename: str) -> DatasetMetadata:
     path = Path(filepath)
-    df = pd.read_csv(filepath, nrows=5)
-    full_df = pd.read_csv(filepath)
+    df = pd.read_csv(filepath)
     return DatasetMetadata(
         id=dataset_id,
         filename=filename,
-        total_rows=len(full_df),
-        total_columns=len(full_df.columns),
+        total_rows=len(df),
+        total_columns=len(df.columns),
         size_bytes=path.stat().st_size,
         category="Uploaded Dataset",
-        description=f"{filename} - {len(full_df)} rows, {len(full_df.columns)} columns",
+        description=f"{filename} - {len(df)} rows, {len(df.columns)} columns",
     )
 
 

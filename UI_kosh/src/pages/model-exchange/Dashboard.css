@@ -1,0 +1,426 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Model Exchange Dashboard — NTT DATA AI Kosh
+   Theme: dark navbar, orange hero, white stat cards, capabilities panel
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Page ────────────────────────────────────────────────────────────────── */
+.mx-page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f6fa;
+  min-height: 100vh;
+  color: #2c3e50;
+}
+
+/* ── Navbar ──────────────────────────────────────────────────────────────── */
+.mx-navbar {
+  background: #1a1a2e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.mx-navbar-left {
+  display: flex;
+  align-items: center;
+}
+.mx-ntt-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mx-ntt-icon {
+  font-size: 22px;
+  color: #fff;
+}
+.mx-ntt-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.mx-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mx-nav-link {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.mx-nav-link:hover {
+  background: #2e2e4a;
+  color: #fff;
+}
+
+/* ── Hero Section ────────────────────────────────────────────────────────── */
+.mx-hero {
+  background: linear-gradient(135deg, #e67e22 0%, #f39c12 40%, #e67e22 70%, #d35400 100%);
+  margin: 24px 24px 0;
+  border-radius: 16px;
+  padding: 48px 48px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.mx-hero-inner {
+  position: relative;
+  z-index: 2;
+}
+.mx-hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+.mx-hero-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 12px;
+  line-height: 1.1;
+}
+.mx-hero-desc {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+.mx-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #1a1a2e;
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.mx-hero-btn:hover {
+  background: #2e2e4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+.mx-hero-btn-icon {
+  font-size: 16px;
+}
+.mx-hero-btn-arrow {
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+.mx-hero-btn:hover .mx-hero-btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Decorative circles */
+.mx-hero-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+}
+.mx-hero-circle--1 {
+  width: 300px;
+  height: 300px;
+  top: -80px;
+  right: -60px;
+}
+.mx-hero-circle--2 {
+  width: 200px;
+  height: 200px;
+  top: 20px;
+  right: 40px;
+}
+.mx-hero-circle--3 {
+  width: 120px;
+  height: 120px;
+  top: 80px;
+  right: 120px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Stats Cards ─────────────────────────────────────────────────────────── */
+.mx-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 20px 24px 0;
+}
+.mx-stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s;
+}
+.mx-stat-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+.mx-stat-label {
+  font-size: 13px;
+  color: #888;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.mx-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.mx-stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1;
+}
+.mx-stat-spark {
+  width: 60px;
+  height: 24px;
+}
+.mx-stat-change {
+  font-size: 12px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+.mx-stat-change--down {
+  color: #e67e22;
+}
+.mx-stat-change--up {
+  color: #27ae60;
+}
+
+/* ── Bottom Panels ───────────────────────────────────────────────────────── */
+.mx-panels {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+  padding: 20px 24px 32px;
+}
+.mx-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.mx-panel-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mx-panel-icon {
+  color: #e67e22;
+}
+.mx-panel-header p {
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 16px;
+}
+
+/* ── Recent Activity ─────────────────────────────────────────────────────── */
+.mx-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mx-activity-item {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+.mx-activity-item:hover {
+  border-color: #e67e22;
+}
+.mx-activity-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mx-activity-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+.mx-activity-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+.mx-activity-badge--green {
+  background: #d5f5e3;
+  color: #27ae60;
+}
+.mx-activity-check {
+  color: #27ae60;
+  font-weight: 700;
+}
+.mx-activity-view {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 13px;
+  align-self: center;
+  transition: color 0.2s;
+}
+.mx-activity-view:hover {
+  color: #e67e22;
+}
+.mx-activity-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #999;
+}
+.mx-activity-tags {
+  display: flex;
+  gap: 6px;
+}
+.mx-activity-tag {
+  background: #f5f5f5;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #777;
+}
+.mx-activity-empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* ── Capabilities ────────────────────────────────────────────────────────── */
+.mx-capabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mx-cap-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+.mx-cap-card:hover {
+  transform: translateX(4px);
+}
+.mx-cap-card--orange {
+  background: linear-gradient(135deg, #fef3e2, #fef9f3);
+  border-left: 3px solid #e67e22;
+}
+.mx-cap-card--green {
+  background: linear-gradient(135deg, #e8fdf0, #f0fdf4);
+  border-left: 3px solid #27ae60;
+}
+.mx-cap-card--blue {
+  background: linear-gradient(135deg, #e8f4fd, #eff6ff);
+  border-left: 3px solid #3498db;
+}
+.mx-cap-card--purple {
+  background: linear-gradient(135deg, #f3e8fd, #f5f3ff);
+  border-left: 3px solid #7c3aed;
+}
+.mx-cap-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.mx-cap-card strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #1a1a2e;
+}
+.mx-cap-card p {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Floating Action Button ──────────────────────────────────────────────── */
+.mx-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #1a1a2e;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s;
+  z-index: 50;
+}
+.mx-fab:hover {
+  background: #2e2e4a;
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .mx-panels {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .mx-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mx-hero {
+    padding: 32px 24px 40px;
+    margin: 16px 16px 0;
+  }
+  .mx-hero-title {
+    font-size: 28px;
+  }
+  .mx-stats,
+  .mx-panels {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+@media (max-width: 480px) {
+  .mx-stats {
+    grid-template-columns: 1fr;
+  }
+  .mx-navbar {
+    padding: 0 16px;
+  }
+}

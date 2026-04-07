@@ -1,4 +1,6 @@
 import logging
+import math
+import random
 import threading
 from typing import Optional
 from pathlib import Path
@@ -119,7 +121,6 @@ def train_automl(aml, features, target, frame):
 
 def poll_leaderboard(aml) -> list[dict]:
     """Get a snapshot of the current leaderboard during or after training."""
-    import math
     try:
         lb = aml.leaderboard
         if lb is None or lb.nrows == 0:
@@ -169,7 +170,6 @@ def get_training_events_from_leaderboard(aml) -> list[str]:
             events.append(f"AutoML: starting {model_id} model training")
             if primary_metric and i == 0:
                 val = row[primary_metric]
-                import math
                 if val is not None and not (isinstance(val, float) and math.isnan(val)):
                     events.append(f"New leader: {model_id}, {primary_metric}: {val}")
 
@@ -179,7 +179,6 @@ def get_training_events_from_leaderboard(aml) -> list[str]:
             model_id = row["model_id"]
             if primary_metric:
                 val = row[primary_metric]
-                import math
                 if val is not None and not (isinstance(val, float) and math.isnan(val)):
                     if best_val is None or val <= best_val:
                         best_val = val
@@ -209,7 +208,6 @@ def run_automl(
 
 
 def get_leaderboard(aml, extra_columns: list[str] = None) -> list[dict]:
-    import math
     lb = aml.leaderboard
     if extra_columns:
         lb = _h2o.automl.get_leaderboard(aml, extra_columns=extra_columns)
@@ -314,7 +312,6 @@ def _metrics_from_leaderboard(model, ml_task: str) -> dict:
 
 def predict_single(model, row_frame, ml_task: str) -> dict:
     """Predict on a pre-built single-row H2O frame."""
-    import math
     preds = model.predict(row_frame)
     pred_df = preds.as_data_frame()
 
@@ -398,7 +395,6 @@ def get_gains_lift(model, frame) -> list[dict]:
 
 def get_random_row(frame, target: str, features: list[str]) -> dict:
     """Get a random row from the frame as feature values."""
-    import random
     df = frame.as_data_frame()
     row = df[features].iloc[random.randint(0, len(df) - 1)]
     return {col: row[col] for col in features}
@@ -413,7 +409,6 @@ def load_model(path: str):
 
 
 def _safe_metric(fn):
-    import math
     try:
         val = fn() if callable(fn) else fn
         if val is None:

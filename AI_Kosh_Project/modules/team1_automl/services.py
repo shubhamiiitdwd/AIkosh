@@ -3,9 +3,12 @@ Core orchestrator for the AutoML wizard.
 All business logic lives here; router.py delegates to these functions.
 """
 import uuid
+import re
+import math
 import asyncio
 import logging
 import json
+import concurrent.futures
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -131,7 +134,6 @@ def _generate_usecase_suggestions(columns: list[ColumnInfo], filename: str) -> l
         return col.dtype in ("float64", "int64")
 
     def _is_id_like(name: str) -> bool:
-        import re
 
         n = name.lower().strip()
         if n in {"id", "uuid", "guid", "index", "rownum", "serial"}:
@@ -304,7 +306,7 @@ def _extract_algo(mid: str) -> str:
 
 
 async def _run_training(run_id: str):
-    import concurrent.futures
+
 
     run = _active_runs.get(run_id)
     if not run:
@@ -574,7 +576,7 @@ async def get_leaderboard(run_id: str) -> LeaderboardResponse:
 
 
 async def get_best_model(run_id: str):
-    import math
+
 
     run = _active_runs.get(run_id)
     if not run or not run.get("result"):
@@ -690,7 +692,7 @@ async def export_results(run_id: str, format: str = "csv"):
     export_dir.mkdir(parents=True, exist_ok=True)
 
     if format == "json":
-        import math
+
 
         export_path = export_dir / "results.json"
         data = {
@@ -790,7 +792,7 @@ async def get_gains_lift(run_id: str) -> GainsLiftResponse:
 
 
 async def generate_ai_summary(run_id: str) -> AISummaryResponse:
-    import math
+
 
     run = _active_runs.get(run_id)
     if not run or not run.get("result"):
@@ -852,7 +854,7 @@ async def generate_ai_summary(run_id: str) -> AISummaryResponse:
 
 
 def _rule_based_summary(best_algo, best_id, target, ml_task, metrics, num_models):
-    import math
+
 
     def _safe(v):
         if v is None:
