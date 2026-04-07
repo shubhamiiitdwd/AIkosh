@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { ColumnInfo, AIRecommendResponse, DatasetPreviewResponse, UseCaseSuggestion, MLTask } from '../types';
 import * as api from '../api';
+import { aiSourceDisplay } from '../aiSource';
 
 interface Props {
   datasetId: string;
@@ -234,14 +235,14 @@ export default function StepConfigureData({
                 <span>✨ AI Recommendation</span>
                 <span className="aw-badge aw-badge--green">{aiResult.confidence}</span>
               </div>
-              {aiResult.source && (
+              {aiResult.source ? (
                 <div className="aw-ai-field">
                   <label>AI Source</label>
-                  <span className={`aw-badge ${aiResult.source === 'huggingface' ? 'aw-badge--green' : 'aw-badge--orange'}`}>
-                    {aiResult.source === 'huggingface' ? 'HuggingFace' : 'Rule-based fallback'}
+                  <span className={`aw-badge ${aiSourceDisplay(aiResult.source).badgeClass}`}>
+                    {aiSourceDisplay(aiResult.source).label}
                   </span>
                 </div>
-              )}
+              ) : null}
               <div className="aw-ai-field">
                 <label>Target Column</label>
                 <span className="aw-badge aw-badge--orange">{aiResult.target_column}</span>

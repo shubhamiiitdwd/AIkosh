@@ -15,9 +15,9 @@ scikit-learn
 huggingface_hub
 datasets
 
-# AI Assistant (Azure - Phase 2, uncomment when needed)
-# openai
-# azure-storage-blob
+# AI Assistant & storage (Azure — install if you use AZURE_OPENAI_* or Blob)
+openai>=1.0.0
+azure-storage-blob>=12.19.0
 
 # Real-time
 websockets

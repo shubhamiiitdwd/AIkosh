@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import type { LeaderboardResponse, AISummaryResponse } from '../types';
 import * as api from '../api';
+import { aiSourceDisplay } from '../aiSource';
 
 interface Props {
   runId: string;
@@ -417,11 +418,11 @@ export default function StepResults({ runId }: Props) {
           <div className="aw-ai-summary-tags">
             <span className="aw-badge aw-badge--orange">Target: {targetCol}</span>
             <span className="aw-badge aw-badge--green">Task: {mlTask?.toUpperCase()}</span>
-            {aiSummary?.source && (
-              <span className={`aw-badge ${aiSummary.source === 'huggingface' ? 'aw-badge--green' : 'aw-badge--orange'}`}>
-                AI Source: {aiSummary.source === 'huggingface' ? 'HuggingFace' : 'Rule-based fallback'}
+            {aiSummary?.source ? (
+              <span className={`aw-badge ${aiSourceDisplay(aiSummary.source).badgeClass}`}>
+                AI Source: {aiSourceDisplay(aiSummary.source).label}
               </span>
-            )}
+            ) : null}
           </div>
           <button className="aw-btn aw-btn--ai aw-btn--full" onClick={handleGenerateSummary} disabled={aiLoading}>
             {aiLoading ? '⏳ Generating...' : '✦ Generate Summary'}
