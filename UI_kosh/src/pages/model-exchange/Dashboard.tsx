@@ -21,8 +21,10 @@ export default function Dashboard({ onStartProject }: Props) {
   useEffect(() => {
     // Fetch dataset count from backend
     fetch(
-      (import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '' : 'http://localhost:8001')) +
-      '/team1/datasets'
+      (import.meta.env.VITE_API_URL ||
+        (import.meta.env.DEV
+          ? ''
+          : `http://localhost:${import.meta.env.VITE_BACKEND_PORT || '8099'}`)) + '/team1/datasets'
     )
       .then(r => r.json())
       .then((data: unknown[]) => {

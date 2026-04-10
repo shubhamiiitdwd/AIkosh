@@ -26,23 +26,27 @@ cd "c:\Users\HP\Desktop\AI kosh\AI_Kosh_Project"
 python -m modules.team1_automl.run_local
 ```
 
-Backend runs at **http://localhost:8001** (Swagger docs at http://localhost:8001/docs)
+Backend runs at **http://localhost:8099** by default (Swagger docs at http://localhost:8099/docs). Set **`BACKEND_PORT` once** in `AI_Kosh_Project/.env` (see `.env.example`); the Vite dev server reads the same value for `/team1` proxy and WebSockets—restart `npm run dev` after changing it.
 
-### 3. Start the frontend (new terminal)
+### 3. Start the frontend
+
+**Option A — one command (API + UI):** from `UI_kosh`, run `npm run dev:all` so the backend and Vite start together (avoids `ECONNREFUSED` on `/team1`).
+
+**Option B — two terminals:** start the backend (step 2), then:
 
 ```powershell
 cd "c:\Users\HP\Desktop\AI kosh\UI_kosh"
 npm run dev
 ```
 
-Frontend runs at **http://localhost:5173** (or the next free port, e.g. 5176).
+Frontend runs at **http://localhost:5173** (or the next free port, e.g. 5176). If you use Option B, the backend **must** be running first; otherwise the UI will show proxy errors until you start it.
 
 ### Running on another computer
 
 1. Clone the repo and run **First-Time Setup** below on that machine.
 2. Copy `AI_Kosh_Project/.env.example` to `AI_Kosh_Project/.env` and set at least `HUGGINGFACE_TOKEN` if you use AI features.
 3. **Java 17** must be on `PATH` (or set `JAVA_HOME`) before starting the backend — H2O needs it.
-4. In **development**, leave **`VITE_API_URL` unset** in `UI_kosh/.env`. The UI talks to the Vite dev server, which **proxies** `/team1` to `http://127.0.0.1:8001`, avoiding CORS issues. Only set `VITE_API_URL` when you intentionally call the API directly (e.g. production build against a known API URL).
+4. In **development**, leave **`VITE_API_URL` unset** in `UI_kosh/.env`. The UI talks to the Vite dev server, which **proxies** `/team1` to the same host/port as **`BACKEND_PORT`** in `AI_Kosh_Project/.env`, avoiding CORS issues. Only set `VITE_API_URL` when you intentionally call the API directly (e.g. production build against a known API URL).
 5. Optional: `CORS_ORIGINS` in `AI_Kosh_Project/.env` — default `*` is fine for local dev with the backend’s CORS settings.
 
 ## First-Time Setup (only once)

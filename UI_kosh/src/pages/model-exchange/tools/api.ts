@@ -9,11 +9,15 @@ import type {
   ClusteringResultResponse, ElbowResponse,
 } from './types';
 
+const DEFAULT_BACKEND_PORT = '8099';
+
 // Dev: empty baseURL → requests go to Vite; vite.config.ts proxies /team1 to FastAPI (no CORS).
-// Prod: set VITE_API_URL or fall back to localhost API.
+// Prod: set VITE_API_URL or fall back to localhost API (port must match VITE_BACKEND_PORT / backend).
 const BASE =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? '' : 'http://localhost:8001');
+  (import.meta.env.DEV
+    ? ''
+    : `http://localhost:${import.meta.env.VITE_BACKEND_PORT || DEFAULT_BACKEND_PORT}`);
 const api = axios.create({ baseURL: BASE });
 
 export const uploadDataset = async (file: File): Promise<DatasetMetadata> => {
@@ -168,7 +172,7 @@ export const getClusteringWsUrl = (runId: string) => {
     return `${wsBase}/team1/ws/clustering/${runId}`;
   }
   const host = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
-  const port = import.meta.env.VITE_BACKEND_PORT || '8001';
+  const port = import.meta.env.VITE_BACKEND_PORT || DEFAULT_BACKEND_PORT;
   return `ws://${host}:${port}/team1/ws/clustering/${runId}`;
 };
 
@@ -181,6 +185,6 @@ export const getWsUrl = (runId: string) => {
   // "ws proxy error: write ECONNABORTED" when FastAPI closes the socket or uvicorn reloads.
   // HTTP still uses the Vite proxy (same-origin). WS connects straight to the API port.
   const host = typeof window !== 'undefined' ? window.location.hostname : '127.0.0.1';
-  const port = import.meta.env.VITE_BACKEND_PORT || '8001';
+  const port = import.meta.env.VITE_BACKEND_PORT || DEFAULT_BACKEND_PORT;
   return `ws://${host}:${port}/team1/ws/training/${runId}`;
 };

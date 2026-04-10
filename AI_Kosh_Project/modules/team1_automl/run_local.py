@@ -46,15 +46,23 @@ app.add_middleware(
 
 app.include_router(router)
 
+_DEFAULT_PORT = int(os.getenv("BACKEND_PORT", "8099"))
+
 
 @app.get("/")
 def root():
+    port = _DEFAULT_PORT
     return {
         "module": "Team 1 - AutoML Wizard",
         "status": "running",
-        "docs": "http://localhost:8001/docs",
+        "docs": f"http://localhost:{port}/docs",
     }
 
 
 if __name__ == "__main__":
-    uvicorn.run("modules.team1_automl.run_local:app", host="0.0.0.0", port=8001, reload=True)
+    uvicorn.run(
+        "modules.team1_automl.run_local:app",
+        host="0.0.0.0",
+        port=_DEFAULT_PORT,
+        reload=True,
+    )
