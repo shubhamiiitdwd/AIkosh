@@ -15,10 +15,12 @@ dist-ssr/
 # Environment & secrets (keep real tokens only locally; never commit live secrets)
 *.env.local
 AI_Kosh_Project/.env
-UI_kosh/.env
 UI/.env
 
-# Root documentation / assets not part of app publish (AI_Kosh_Project + UI_kosh only)
+# Legacy / local-only app (not published with this repo)
+UI_kosh/
+
+# Root documentation / assets not part of app publish
 /AIKoshBackendCodeStructure.docx
 /Frontend.docx
 /ai_kosh_team1_automl_plan.md
